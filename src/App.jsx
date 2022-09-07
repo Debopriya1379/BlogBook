@@ -1,11 +1,23 @@
-import {Box,Typography} from '@mui/material'
+import {Box} from '@mui/material'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from './Pages/Home';
 import Navbar from './components/Navbar';
+import ParticularBlog from './Pages/ParticularBlog';
+import AddNewBlog from './Pages/AddNewBlog';
+import SearchResults from './components/SearchResults';
 
 function App() {
   return (
     <Box>
-      <Navbar/>
-      <Typography variant='h6'>Start writing your react app with mui</Typography>
+      <Router>
+        <Navbar/>
+        <Routes>
+          <Route path='/' element={ <Home/> } />
+          <Route path='/blog/:blogId' element={ <ParticularBlog/> } />
+          <Route path='/new' element={ <AddNewBlog/> } />
+          <Route path='/search/:searchText' element={ <SearchResults/> } />
+        </Routes>
+      </Router>
     </Box>
   );
 }
