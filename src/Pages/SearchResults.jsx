@@ -1,18 +1,27 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography,styled,InputBase,IconButton } from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { collection,onSnapshot } from "firebase/firestore";
-import BlogCard from "./BlogCard";
+import BlogCard from "../components/BlogCard";
 import db from '../firebase-config'
+
+const Search = styled('div')(({theme})=>({
+    border: '1px solid grey',
+    padding: '2px 15px',
+    borderRadius: theme.shape.borderRadius,
+    width: '95%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  }))
 
 export default function SearchResults() {
 
-    const{searchText}= useParams()
+    const [searchText,setSearchText] = useState('')
     const [allBlogs,setAllBlogs] = useState([])
     const [filteredData,setFilteredData] = useState([])
 
     const getBlogs=()=>{
-        console.log('get blogs')
         const blogsCollectionref = collection(db,'blogs')
         onSnapshot(blogsCollectionref,(snapshot)=>{
           setAllBlogs(snapshot.docs.map(
@@ -35,14 +44,25 @@ export default function SearchResults() {
 
     useEffect(()=>{
         getBlogs()
-        handleFilter()
-    },[searchText])
+        // eslint-disable-next-line
+    },[])
 
 
     return (
         <Box sx={{margin:'0px auto',mt:'30px'}}>
             <Container sx={{width:{xs:'100%',sm:'90%',md:'50%'}}}>
-                <Typography variant="h6">Search results</Typography>
+            <Search>
+                <InputBase 
+                placeholder="search" 
+                sx={{color:'black',p:0}}
+                value={searchText}
+                onChange={(e)=>setSearchText(e.target.value)}
+                />
+                <IconButton onClick={()=>handleFilter()}>
+                    <SearchIcon/>
+                </IconButton>
+            </Search>
+                {filteredData.length !== 0 ? <Typography variant="h6">Search results</Typography> : ''}
                 {
                     (filteredData.length !== 0) && 
                     filteredData.map((data)=>{

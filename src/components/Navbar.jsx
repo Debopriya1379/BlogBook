@@ -1,8 +1,6 @@
-import{AppBar,Toolbar,styled,Box,Badge,Avatar,InputBase,Typography,Button,IconButton} from '@mui/material'
+import{AppBar,Toolbar,styled,Box,Badge,Avatar,Typography,Button} from '@mui/material'
 import { Notifications,Mail,Pets } from "@mui/icons-material"
-import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate,Link } from 'react-router-dom'
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 const StyledToolBar = styled(Toolbar)({
   display: 'flex',
@@ -18,16 +16,6 @@ const Logo = styled('div')(({theme})=>({
   gap: 10,
 }))
 
-const Search = styled('div')(({theme})=>({
-  border: '1px solid grey',
-  padding: '2px 15px',
-  borderRadius: theme.shape.borderRadius,
-  width: '35%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-}))
-
 const Icons = styled(Box)(({theme})=>({
   display: 'none',
   alignItems: 'center',
@@ -41,8 +29,6 @@ export default function Navbar() {
 
   const navigate = useNavigate()
 
-  const [serchText,setSearchText]= useState('')
-
   const handleNavigate=()=>{
     navigate('/new')
   }
@@ -54,20 +40,8 @@ export default function Navbar() {
             <Pets/>
             <Typography variant='h6'>Blogger</Typography>
           </Logo>
-          <Search>
-            <InputBase 
-              placeholder="search" 
-              sx={{color:'black',p:0}}
-              value={serchText}
-              onChange={(e)=>setSearchText(e.target.value)}
-            />
-            <IconButton>
-              { serchText && <Link to={`/search/${serchText}`}>
-                <SearchIcon/>
-              </Link>}
-            </IconButton>
-          </Search>
           <Icons>
+            {( window.location.pathname === '/search') ? '' : (<Button onClick={()=>navigate('/search')} sx={{border:'1px solid blue', padding:'5px 20px', marginRight:'50px'}}>search</Button>)}
             {( window.location.pathname === '/new') ? '' : (<Button onClick={()=>handleNavigate()} sx={{border:'1px solid blue', padding:'5px 20px', marginRight:'50px'}}>Add New</Button>)}
             <Badge badgeContent={4} color='error' >
                 <Mail/>

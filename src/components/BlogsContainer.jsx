@@ -9,7 +9,6 @@ export default function BlogsContainer({tab}) {
   const [allBlogs,setAllBlogs] = useState([])
 
   const getBlogs=()=>{
-    console.log('get blogs')
     const blogsCollectionref = collection(db,'blogs')
     const q = query(blogsCollectionref, where("category", "==", tab))
     onSnapshot(q, (snapshot)=>{

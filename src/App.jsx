@@ -2,9 +2,8 @@ import {Box} from '@mui/material'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Pages/Home';
 import Navbar from './components/Navbar';
-import ParticularBlog from './Pages/ParticularBlog';
 import AddNewBlog from './Pages/AddNewBlog';
-import SearchResults from './components/SearchResults';
+import SearchResults from './Pages/SearchResults';
 
 function App() {
   return (
@@ -13,9 +12,8 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={ <Home/> } />
-          <Route path='/blog/:blogId' element={ <ParticularBlog/> } />
           <Route path='/new' element={ <AddNewBlog/> } />
-          <Route path='/search/:searchText' element={ <SearchResults/> } />
+          <Route path='/search' element={ <SearchResults/> } />
         </Routes>
       </Router>
     </Box>
